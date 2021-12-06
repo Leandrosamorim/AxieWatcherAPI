@@ -65,11 +65,8 @@ public class Axie implements Serializable {
     @JsonProperty
     @Transient
     private Auction auction;
-     @JoinColumn(name = "userid", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-    @Column(name = "userid", insertable = false, updatable = false)
-    private int userid;
+    @Column(name = "userid")
+    private Integer userid;
 
     public Auction getAuction() {
         return auction;
@@ -79,7 +76,7 @@ public class Axie implements Serializable {
         this.auction = auction;
     }
 
-    public Axie(Integer id, String name, String class1, String owner, Integer breedCount, String image, Auction auction, User userid) {
+    public Axie(Integer id, String name, String class1, String owner, Integer breedCount, String image, Auction auction, int userid) {
         this.id = id;
         this.name = name;
         this.class1 = class1;
@@ -88,7 +85,7 @@ public class Axie implements Serializable {
         this.image = image;
         this.price = auction.getCurrentPriceUSD();
         this.auction = auction;
-        this.userid = userid.getId();
+        this.userid = userid;
     }
 
     public Axie() {

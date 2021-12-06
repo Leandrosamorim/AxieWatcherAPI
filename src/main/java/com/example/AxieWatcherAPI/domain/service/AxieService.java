@@ -35,7 +35,7 @@ public class AxieService {
         return true;
     }
     
-    public Axie findById(Long id)
+    public Axie findById(Integer id)
     {
         return axieRepository.findById(id).get();
     }

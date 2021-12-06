@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
  * @author 55229
  */
 @Repository
-public interface AxieRepository extends JpaRepository<Axie, Long>{
+public interface AxieRepository extends JpaRepository<Axie, Integer>{
 
     public List<Axie> findByOwner(String ownerId);
 

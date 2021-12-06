@@ -16,7 +16,7 @@ import java.util.List;
 public class AxieList {
 
     @JsonProperty
-    private List<Axie> results;
+    private List<AxieDto> results;
     @JsonProperty
     private int total;
 
@@ -24,7 +24,7 @@ public class AxieList {
         results = new ArrayList<>();
     }
     
-    public List<Axie> getAxies(){
+    public List<AxieDto> getAxies(){
         return results;
     }
     

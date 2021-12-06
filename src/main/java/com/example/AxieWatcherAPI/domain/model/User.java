@@ -5,8 +5,8 @@
  */
 package com.example.AxieWatcherAPI.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,11 +23,10 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "users")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+    @NamedQuery(name = "User.findByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findByRoles", query = "SELECT u FROM User u WHERE u.roles = :roles")})
 public class User implements Serializable {
@@ -42,15 +38,13 @@ public class User implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "email")
-    private String email;
+    @Column(name = "username")
+    private String username;
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
     @Column(name = "roles")
     private String roles;
-    @OneToMany(mappedBy = "userid")
-    private List<Axie> axieList;
 
     public User() {
     }
@@ -59,9 +53,9 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String email, String password) {
+    public User(Integer id, String username, String password) {
         this.id = id;
-        this.email = email;
+        this.username = username;
         this.password = password;
     }
 
@@ -73,12 +67,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -95,15 +89,6 @@ public class User implements Serializable {
 
     public void setRoles(String roles) {
         this.roles = roles;
-    }
-
-    @XmlTransient
-    public List<Axie> getAxieList() {
-        return axieList;
-    }
-
-    public void setAxieList(List<Axie> axieList) {
-        this.axieList = axieList;
     }
 
     @Override

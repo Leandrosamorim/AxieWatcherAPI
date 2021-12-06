@@ -8,6 +8,8 @@ package com.example.AxieWatcherAPI.domain.service;
 import com.example.AxieWatcherAPI.domain.model.User;
 import com.example.AxieWatcherAPI.repository.UserRepository;
 import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,10 +25,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
     
-    public boolean create(User user)
+    public User create(User user)
     {
+        String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+        user.setPassword(encodedPassword);
         userRepository.save(user);
-        return true;
+        User createdUser = userRepository.getByUsername(user.getUsername());
+        return createdUser;
     }
     
     public User edit(User user)
@@ -35,9 +40,9 @@ public class UserService {
         return user;
     }
     
-    public User findById(Long id)
+    public User findById(Integer id)
     {
-        return userRepository.findById(id).get();
+        return userRepository.getById(id);
     }
     
     public List<User> findAll(){
@@ -47,6 +52,10 @@ public class UserService {
     public boolean delete(int id){
         userRepository.removeById(id);
         return true;
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.getByUsername(username);
     }
     
 }
